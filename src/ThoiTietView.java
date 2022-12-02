@@ -77,32 +77,32 @@ public class ThoiTietView extends JFrame implements ActionListener {
 		
 		Handle hd = new Handle();
 		
-		View jPanel1 = new View();
-		jPanel1.setData(hd.getCityWeather(0).getNameCity(), hd.getCityWeather(0).getTemperature(), hd.getCityWeather(0).getStatus());
-		View jPanel2 = new View();
-		jPanel2.setData(hd.getCityWeather(1).getNameCity(), hd.getCityWeather(1).getTemperature(), hd.getCityWeather(1).getStatus());
-		View jPanel3 = new View();
-		jPanel3.setData(hd.getCityWeather(2).getNameCity(), hd.getCityWeather(2).getTemperature(), hd.getCityWeather(2).getStatus());
-		View jPanel4 = new View();
-		jPanel4.setData(hd.getCityWeather(3).getNameCity(), hd.getCityWeather(3).getTemperature(), hd.getCityWeather(3).getStatus());
-		View jPanel5 = new View();
-		jPanel5.setData(hd.getCityWeather(4).getNameCity(), hd.getCityWeather(4).getTemperature(), hd.getCityWeather(4).getStatus());
-		View jPanel6 = new View();
-		jPanel6.setData(hd.getCityWeather(5).getNameCity(), hd.getCityWeather(5).getTemperature(), hd.getCityWeather(5).getStatus());
-		View jPanel7 = new View();
-		jPanel7.setData(hd.getCityWeather(6).getNameCity(), hd.getCityWeather(6).getTemperature(), hd.getCityWeather(6).getStatus());
-		View jPanel8 = new View();
-		jPanel8.setData(hd.getCityWeather(7).getNameCity(), hd.getCityWeather(7).getTemperature(), hd.getCityWeather(7).getStatus());
-		panel_main_left.add(jPanel1);
-		panel_main_left.add(jPanel2);
-		panel_main_left.add(jPanel3);
-		panel_main_left.add(jPanel4);
-		panel_main_left.add(jPanel5);
-		panel_main_left.add(jPanel6);
-		panel_main_left.add(jPanel7);
-		panel_main_left.add(jPanel8);
 		
+		try {
+			byte[] byte_read = new byte[9999];
+			Scanner sc = new Scanner(System.in);
+			Socket socket = new Socket("localhost", 6868);
+			System.out.println("Connected" + socket);
+			
+			input = new ObjectInputStream(socket.getInputStream());
+			output = new DataOutputStream( socket.getOutputStream());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		
+		try {
+			output.writeUTF("setMain");
+			output.flush();
+			
+			City city = (City) input.readObject();
+			
+		for (int i=0; i<8; i++) {
+			View jPanel1 = new View();
+			jPanel1.setData(hd.getCityWeather(i).getNameCity(), hd.getCityWeather(i).getTemperature(), hd.getCityWeather(i).getStatus());
+			panel_main_left.add(jPanel1);
+		}
+
+		//
 		for (int i = 0; i < 8; i++) {
 			System.out.println(hd.getCityWeather(i).getTemperature());
 		}
@@ -229,21 +229,11 @@ public class ThoiTietView extends JFrame implements ActionListener {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel.setBounds(18, 63, 239, 22);
 		getContentPane().add(lblNewLabel);
-
 		
-		try {
-			byte[] byte_read = new byte[9999];
-			Scanner sc = new Scanner(System.in);
-			Socket socket = new Socket("localhost", 6868);
-			System.out.println("Connected" + socket);
-			
-			input = new ObjectInputStream(socket.getInputStream());
-			output = new DataOutputStream( socket.getOutputStream());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			} catch (Exception e) {
+			System.err.println(e.getMessage());
 		}
 		setMainRight();
-		
 	}
 	
 
@@ -270,8 +260,6 @@ public class ThoiTietView extends JFrame implements ActionListener {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		
-	
 	}
 
 	@Override
@@ -279,7 +267,6 @@ public class ThoiTietView extends JFrame implements ActionListener {
 		String txt_search = textField_Search.getText();
 		try {
 			output.writeUTF(txt_search);
-			//123&&&txt_search
 			output.flush();
 			
 			City city = (City) input.readObject();
@@ -288,11 +275,8 @@ public class ThoiTietView extends JFrame implements ActionListener {
 	                    "ERROR", JOptionPane.ERROR_MESSAGE);		
 	         } else {
 				new Detail0().setDataSearch(city);
-			}
-		} catch (Exception e2) {
-			
+	         }
+		} catch (Exception e2) {	
 		}
 	}
-	
-	
 }

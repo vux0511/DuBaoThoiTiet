@@ -27,21 +27,27 @@ public class Server {
 				Handle setDaNang = new Handle(); 
 				
 				do {
-					String a = input.readUTF();
-					System.out.println("Client say : " +(a));
+					String inputThoiTietView = input.readUTF();
+					//Set MainRight
+					if (inputThoiTietView.equalsIgnoreCase("setMain") ) {
+						System.out.println("setMain");
+						City citySetMain = null;
+						for (int i=0; i<8; i++) {
+							citySetMain = hd.getCityWeather(i);
+						}
+						output.writeObject((Object)citySetMain);
+						output.flush();
 					
-					if (a.equalsIgnoreCase("setMainRight") ) {
-						System.out.println(a);
+					//Set Main
+					} else if (inputThoiTietView.equalsIgnoreCase("setMainRight") ) {
+						System.out.println(inputThoiTietView);
 						City city = hd.getDaNang();
-						System.out.println(city.getNameCity());
-
 						output.writeObject((Object)city);
 						output.flush();
+						
+					//Set Search
 					} else {
-						System.err.println(a);
-						City city = hd.Search(a);
-						System.out.println(city.getNameCity());
-
+						City city = hd.Search(inputThoiTietView);
 						output.writeObject((Object)city);
 						output.flush();
 					}
