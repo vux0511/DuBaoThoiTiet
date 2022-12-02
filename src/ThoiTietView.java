@@ -3,6 +3,14 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Scanner;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -31,7 +39,8 @@ public class ThoiTietView extends JFrame implements ActionListener {
 	private JTextField textField_Search;
 	JLabel jLabel_NameCityRight, lbl_humidity, lblTempMinmax, lblNewLabel_12, lbl_Status, 
 	jLabel_TemperatureRight , lblVision,lblUv,lblWind; 
-
+	ObjectInputStream input;
+	DataOutputStream output;
 	
 	public ThoiTietView() {
 		
@@ -220,6 +229,19 @@ public class ThoiTietView extends JFrame implements ActionListener {
 		lblNewLabel.setBounds(18, 63, 239, 22);
 		getContentPane().add(lblNewLabel);
 		setMainRight();
+		
+		try {
+			byte[] byte_read = new byte[9999];
+			Scanner sc = new Scanner(System.in);
+			Socket socket = new Socket("localhost", 6868);
+			System.out.println("Connected" + socket);
+			
+			input = new ObjectInputStream(socket.getInputStream());
+			output = new DataOutputStream( socket.getOutputStream());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 	
 
@@ -240,16 +262,23 @@ public class ThoiTietView extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		String txt_search = textField_Search.getText();
-		City city = new Handle().Search(txt_search);
-		if (city == null) {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy thành phố này!",
-                    "ERROR", JOptionPane.ERROR_MESSAGE);		
-         } else {
-			new Detail0().setDataSearch(city);
-		}
 		
+		String txt_search = textField_Search.getText();
+		try {
+			output.writeUTF(txt_search);
+			output.flush();
+			
+			City city = (City) input.readObject();
+			if (city == null) {
+	            JOptionPane.showMessageDialog(this, "Không tìm thấy thành phố này!",
+	                    "ERROR", JOptionPane.ERROR_MESSAGE);		
+	         } else {
+				new Detail0().setDataSearch(city);
+			}
+		} catch (Exception e2) {
+			
+		}
 	}
+	
 	
 }

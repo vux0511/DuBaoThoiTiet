@@ -24,8 +24,6 @@ import javax.swing.JSeparator;
 
 public class ThoiTietMain extends JFrame implements ActionListener {
 
-
-	
 	public void init() {		
 		try {	
 			ThoiTietView ttv = new ThoiTietView();
@@ -37,13 +35,14 @@ public class ThoiTietMain extends JFrame implements ActionListener {
 			System.out.println("Không tìm thấy thành phố này");
 		}
 	}
-	 
-	public ThoiTietMain() {
-		init();
-	}
+
+//	public ThoiTietMain() {
+//		init();
+//	}
 
 	public static void main(String[] args) {
 		ThoiTietMain ttm = new ThoiTietMain();
+		ttm.init();
 		ttm.setTitle("Dự Báo Thời Tiết");
 		ttm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

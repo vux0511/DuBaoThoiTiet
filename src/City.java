@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class City {
+public class City implements Serializable {
 	private String nameCity;
 	private String temperature;
 	private String status;

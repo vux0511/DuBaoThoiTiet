@@ -60,12 +60,12 @@ public class Handle {
 	public City Search(String txt) {
 		try {	
 			String city = convert_Url(txt); 
+			
 			String url = "https://thoitiet.vn/"+city;
 			System.out.println(city);
 			Document doc = Jsoup.connect(url).timeout(5000).get();
 			
 			Element nameCity = doc.select("a[href=/"+city+"]").first();
-			System.out.println(nameCity.ownText());
 			Element temperature = doc.select("span[class=current-temperature]").first();
 			Element status = doc.select("p[class=overview-caption-item overview-caption-item-detail]").first();
 			Element temp_minmax = doc.select("span[class=text-white op-8 fw-bold]").first();
@@ -84,8 +84,10 @@ public class Handle {
 		}
 	}
 	
+	
 	public static String convert_Url(String city) { 
 		try {
+			System.out.println(city);
             String temp = Normalizer.normalize(city, Normalizer.Form.NFD);
             Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
             return pattern.matcher(temp).replaceAll("").toLowerCase().replaceAll(" ", "-").replaceAll("đ", "d");
