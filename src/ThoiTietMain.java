@@ -36,9 +36,6 @@ public class ThoiTietMain extends JFrame implements ActionListener {
 		}
 	}
 
-//	public ThoiTietMain() {
-//		init();
-//	}
 
 	public static void main(String[] args) {
 		ThoiTietMain ttm = new ThoiTietMain();
@@ -49,7 +46,6 @@ public class ThoiTietMain extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 

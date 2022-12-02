@@ -24,17 +24,30 @@ public class Server {
 				DataInputStream input = new DataInputStream(socket.getInputStream());
 				ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
 				
+				Handle setDaNang = new Handle(); 
+				
 				do {
 					String a = input.readUTF();
 					System.out.println("Client say : " +(a));
-				
-					City city = hd.Search(a);
-					System.out.println(city.getNameCity());
+					
+					if (a.equalsIgnoreCase("setMainRight") ) {
+						System.out.println(a);
+						City city = hd.getDaNang();
+						System.out.println(city.getNameCity());
 
-					output.writeObject((Object)city);
-					output.flush();
+						output.writeObject((Object)city);
+						output.flush();
+					} else {
+						System.err.println(a);
+						City city = hd.Search(a);
+						System.out.println(city.getNameCity());
+
+						output.writeObject((Object)city);
+						output.flush();
+					}
+
 				} while (true);
-
+				
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}

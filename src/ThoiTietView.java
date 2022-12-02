@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -228,7 +229,7 @@ public class ThoiTietView extends JFrame implements ActionListener {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel.setBounds(18, 63, 239, 22);
 		getContentPane().add(lblNewLabel);
-		setMainRight();
+
 		
 		try {
 			byte[] byte_read = new byte[9999];
@@ -241,6 +242,7 @@ public class ThoiTietView extends JFrame implements ActionListener {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		setMainRight();
 		
 	}
 	
@@ -249,23 +251,35 @@ public class ThoiTietView extends JFrame implements ActionListener {
 	public void setThoiTiet(String nhietdo) {
 		jLabel_TemperatureRight.setText(nhietdo);
 	}
+	
 	public void setMainRight() {
-		City setDaNang = new Handle().getDaNang(); 
-		lbl_humidity.setText(setDaNang.getHumidity());
-		jLabel_NameCityRight.setText(setDaNang.getNameCity());
-		jLabel_TemperatureRight.setText(setDaNang.getTemperature());
-		lbl_Status.setText(setDaNang.getStatus());
-		lblVision.setText(setDaNang.getVision());
-		lblUv.setText(setDaNang.getUv());
-		lblWind.setText(setDaNang.getWind());
+		try {
+			output.writeUTF("setMainRight");
+			output.flush();
+
+			City setDaNang = (City) input.readObject();
+			
+			lbl_humidity.setText(setDaNang.getHumidity());
+			jLabel_NameCityRight.setText(setDaNang.getNameCity());
+			jLabel_TemperatureRight.setText(setDaNang.getTemperature());
+			lbl_Status.setText(setDaNang.getStatus());
+			lblVision.setText(setDaNang.getVision());
+			lblUv.setText(setDaNang.getUv());
+			lblWind.setText(setDaNang.getWind());
+			
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		
+	
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
 		String txt_search = textField_Search.getText();
 		try {
 			output.writeUTF(txt_search);
+			//123&&&txt_search
 			output.flush();
 			
 			City city = (City) input.readObject();

@@ -75,7 +75,6 @@ public class Handle {
 			Element uv = doc.select("span[class=text-white op-8 fw-bold]").get(5);
 			Element air = doc.select("h2[class=air-title]").first();
 
-			
 			return new City(nameCity.ownText(),temperature.ownText(), status.ownText(), humidity.ownText(),
 					temp_minmax.ownText(), vision.ownText(), wind.ownText(), uv.ownText(), air.ownText());
 		}catch(Exception e1) {
