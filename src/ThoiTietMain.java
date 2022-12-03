@@ -31,7 +31,7 @@ public class ThoiTietMain extends JFrame implements ActionListener {
 			ttv.setVisible(true);
 			ttv.setLocationRelativeTo(null);
 						
-		}catch(Exception e1) {
+			}catch(Exception e1) {
 			System.out.println("Không tìm thấy thành phố này");
 		}
 	}

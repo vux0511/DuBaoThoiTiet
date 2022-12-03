@@ -11,15 +11,12 @@ import java.util.Scanner;
 
 public class Server {
 	public static void main(String[] args) {
-			
 			Handle hd = new Handle();
-			
-//			Scanner sc = new Scanner(System.in);
 			byte[] byte_read = new byte[9999];
+			
 			try {	
 				ServerSocket serverSocket = new ServerSocket(6868);
 				Socket socket = serverSocket.accept();
-				System.out.println("Client accepted");
 				
 				DataInputStream input = new DataInputStream(socket.getInputStream());
 				ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
@@ -28,27 +25,29 @@ public class Server {
 				
 				do {
 					String inputThoiTietView = input.readUTF();
-					//Set MainRight
-					if (inputThoiTietView.equalsIgnoreCase("setMain") ) {
-						System.out.println("setMain");
-						City citySetMain = null;
-						for (int i=0; i<8; i++) {
-							citySetMain = hd.getCityWeather(i);
-						}
-						output.writeObject((Object)citySetMain);
-						output.flush();
 					
 					//Set Main
+					if (inputThoiTietView.equalsIgnoreCase("setMain") ) {
+						System.out.println("setMain");
+						ListCity cityArray = new ListCity();
+						for (int i=0; i<8; i++) {
+							City citySetMain = hd.getCityWeather(i);
+							cityArray.addCityArray(citySetMain, i);
+						}
+						output.writeObject((Object)cityArray);
+						output.flush();
+					
+					//Set MainRight
 					} else if (inputThoiTietView.equalsIgnoreCase("setMainRight") ) {
 						System.out.println(inputThoiTietView);
-						City city = hd.getDaNang();
-						output.writeObject((Object)city);
+						City citySetMainRight = hd.getDaNang();
+						output.writeObject((Object)citySetMainRight);
 						output.flush();
 						
 					//Set Search
 					} else {
-						City city = hd.Search(inputThoiTietView);
-						output.writeObject((Object)city);
+						City citySearch = hd.Search(inputThoiTietView);
+						output.writeObject((Object)citySearch);
 						output.flush();
 					}
 

@@ -25,7 +25,7 @@ public class View extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		JPanel panel_0 = new JPanel();
 		
-		// sự kiện click vào jpanel
+		// sự kiện click vào JPanel
 		panel_0.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -34,27 +34,19 @@ public class View extends JPanel {
 			}
 
 			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+			public void mousePressed(MouseEvent e) {				
 			}
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+			public void mouseReleased(MouseEvent e) {				
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+			public void mouseEntered(MouseEvent e) {				
 			}
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+			public void mouseExited(MouseEvent e) {				
 			}
 		});
 		

@@ -49,20 +49,16 @@ public class Handle {
 			return new City(nameCity.ownText(),temperature.ownText(), status.ownText(), humidity.ownText(),
 					temp_minmax.ownText(), vision.ownText(), wind.ownText(), uv.ownText(), air.ownText());
 			
-		}catch(Exception e1) {
+			}catch(Exception e1) {
 			System.out.println("Không tìm thấy thành phố này");
 			return null;
 		}
-
-
 	}
 	
 	public City Search(String txt) {
 		try {	
 			String city = convert_Url(txt); 
-			
 			String url = "https://thoitiet.vn/"+city;
-			System.out.println(city);
 			Document doc = Jsoup.connect(url).timeout(5000).get();
 			
 			Element nameCity = doc.select("a[href=/"+city+"]").first();
@@ -77,7 +73,7 @@ public class Handle {
 
 			return new City(nameCity.ownText(),temperature.ownText(), status.ownText(), humidity.ownText(),
 					temp_minmax.ownText(), vision.ownText(), wind.ownText(), uv.ownText(), air.ownText());
-		}catch(Exception e1) {
+			}catch(Exception e1) {
 			System.out.println("Không tìm thấy thành phố này");
 			return null;
 		}
@@ -95,11 +91,4 @@ public class Handle {
 	      }
 		return city;
 	}
-	
-	
-//	public static void main(String[] args) {
-//		Handle hd = new Handle();
-//		System.out.println(hd.Search("sdfsdf").getNameCity());
-//		hd.getDaNang();
-//	}
 }
