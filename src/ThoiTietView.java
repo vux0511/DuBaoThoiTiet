@@ -1,10 +1,13 @@
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -28,6 +31,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
+import javax.imageio.ImageIO;
 import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -40,9 +44,9 @@ public class ThoiTietView extends JFrame implements ActionListener {
 	ImageIcon icon_location = new ImageIcon("C:\\Users\\vu_20\\Desktop\\location.png", "Lock");
  
 
-	private JTextField textField_Search;
-	JLabel jLabel_NameCityRight, lbl_humidity, lblTempMinmax, lblNewLabel_12, lbl_Status, 
-	jLabel_TemperatureRight , lblVision,lblUv,lblWind; 
+	private JTextField textFieldSearch;
+	JLabel jLabelNameCityRight, jLabelHumiNumber, jLabelTempMinmax, lblNewLabel_12, jLabelStatus ,jLabelIconRight,
+	jLabel_TemperatureRight , jLabelVision,jLabelUV,jLabelWind; 
 	ObjectInputStream input;
 	DataOutputStream output;
 	
@@ -50,33 +54,33 @@ public class ThoiTietView extends JFrame implements ActionListener {
 				
 		getContentPane().setLayout(null);
 		this.setTitle("Dự Báo Thời Tiết");
-		JPanel panel_top = new JPanel();
-		panel_top.setBounds(8, 10, 741, 46);
-		getContentPane().add(panel_top);
-		panel_top.setLayout(null);
+		JPanel panelTop = new JPanel();
+		panelTop.setBounds(8, 10, 741, 46);
+		getContentPane().add(panelTop);
+		panelTop.setLayout(null);
 		
-		JButton btn_Search = new JButton("Tìm kiếm");
-		btn_Search.addActionListener(this);
-		btn_Search.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btn_Search.setBounds(465, 10, 88, 28);
-		panel_top.add(btn_Search);
+		JButton btnSearch = new JButton("Tìm kiếm");
+		btnSearch.addActionListener(this);
+		btnSearch.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnSearch.setBounds(465, 10, 88, 28);
+		panelTop.add(btnSearch);
 		
-		textField_Search = new JTextField();
-		textField_Search.setBounds(200, 10, 257, 28);
-		panel_top.add(textField_Search);
-		textField_Search.setColumns(10);
+		textFieldSearch = new JTextField();
+		textFieldSearch.setBounds(200, 10, 257, 28);
+		panelTop.add(textFieldSearch);
+		textFieldSearch.setColumns(10);
 		
-		JLabel lbl_logo = new JLabel("");
-		lbl_logo.setIcon(new ImageIcon("C:\\Users\\vu_20\\Desktop\\02d2x.png"));
-		lbl_logo.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbl_logo.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_logo.setBounds(0, 0, 72, 46);
-		panel_top.add(lbl_logo);
+		JLabel jLabelLogo = new JLabel("");
+		jLabelLogo.setIcon(new ImageIcon("C:\\Users\\vu_20\\Desktop\\02d2x.png"));
+		jLabelLogo.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		jLabelLogo.setHorizontalAlignment(SwingConstants.CENTER);
+		jLabelLogo.setBounds(0, 0, 72, 46);
+		panelTop.add(jLabelLogo);
 		
-		JPanel panel_main_left = new JPanel();
-		panel_main_left.setBounds(8, 95, 523, 371);
-		getContentPane().add(panel_main_left);
-		panel_main_left.setLayout(new GridLayout(2 , 3, 10 , 10));
+		JPanel panelMain = new JPanel();
+		panelMain.setBounds(8, 95, 523, 371);
+		getContentPane().add(panelMain);
+		panelMain.setLayout(new GridLayout(2 , 3, 10 , 10));
 		
 		Handle hd = new Handle();
 		
@@ -98,145 +102,153 @@ public class ThoiTietView extends JFrame implements ActionListener {
 			output.flush();
 			
 			ListCity cityArray = (ListCity) input.readObject();
-			
 			for (int i=0; i < 8; i++) {
 				View jPanel1 = new View();
 				jPanel1.setData(cityArray.getCityArray()[i].getNameCity(), cityArray.getCityArray()[i].getTemperature(),
-						cityArray.getCityArray()[i].getStatus());
-				panel_main_left.add(jPanel1);
+						cityArray.getCityArray()[i].getStatus(),cityArray.getCityArray()[i].getUrlIcon());
+				panelMain.add(jPanel1);
 			}
 		
-			JPanel panel_main_right = new JPanel();
-			panel_main_right.setBorder(new LineBorder(new Color(0, 0, 0)));
-			panel_main_right.setBounds(539, 95, 210, 371);
-			getContentPane().add(panel_main_right);
-			panel_main_right.setLayout(null);
+			JPanel panelMainRight = new JPanel();
+			panelMainRight.setBorder(new LineBorder(new Color(0, 0, 0)));
+			panelMainRight.setBounds(539, 95, 210, 371);
+			getContentPane().add(panelMainRight);
+			panelMainRight.setLayout(null);
 			
-			jLabel_NameCityRight = new JLabel();
-			jLabel_NameCityRight.setText("Hà Nội");
-			jLabel_NameCityRight.setHorizontalAlignment(SwingConstants.LEFT);
-			jLabel_NameCityRight.setFont(new Font("Tahoma", Font.BOLD, 14));
-			jLabel_NameCityRight.setBounds(8, 10, 182, 27);
-			panel_main_right.add(jLabel_NameCityRight);
+			jLabelNameCityRight = new JLabel();
+			jLabelNameCityRight.setText("Hà Nội");
+			jLabelNameCityRight.setHorizontalAlignment(SwingConstants.LEFT);
+			jLabelNameCityRight.setFont(new Font("Tahoma", Font.BOLD, 14));
+			jLabelNameCityRight.setBounds(8, 10, 182, 27);
+			panelMainRight.add(jLabelNameCityRight);
 			
-			JLabel jLabel_TimeRight = new JLabel("Đã cập nhật 27 phút trước");
-			jLabel_TimeRight.setFont(new Font("Tahoma", Font.PLAIN, 11));
-			jLabel_TimeRight.setBounds(8, 36, 182, 13);
-			panel_main_right.add(jLabel_TimeRight);
+			JLabel jLabelTimeRight = new JLabel("Đã cập nhật 27 phút trước");
+			jLabelTimeRight.setFont(new Font("Tahoma", Font.PLAIN, 11));
+			jLabelTimeRight.setBounds(8, 36, 182, 13);
+			panelMainRight.add(jLabelTimeRight);
 			
-			JLabel lblNewLabel_8 = new JLabel(icon1);
-			lblNewLabel_8.setBounds(8, 59, 72, 75);
-			panel_main_right.add(lblNewLabel_8);
+			jLabelIconRight = new JLabel("");
+			jLabelIconRight.setBounds(8, 59, 72, 75);
+			panelMainRight.add(jLabelIconRight);
 			
 			jLabel_TemperatureRight = new JLabel("18° C");
 			jLabel_TemperatureRight.setHorizontalAlignment(SwingConstants.CENTER);
 			jLabel_TemperatureRight.setFont(new Font("Tahoma", Font.BOLD, 30));
 			jLabel_TemperatureRight.setBounds(107, 59, 83, 80);
-			panel_main_right.add(jLabel_TemperatureRight);
+			panelMainRight.add(jLabel_TemperatureRight);
 			
-			lbl_Status = new JLabel("Cảm giác như 18°.");
-			lbl_Status.setFont(new Font("Tahoma", Font.BOLD, 12));
-			lbl_Status.setBounds(8, 144, 168, 13);
-			panel_main_right.add(lbl_Status);
+			jLabelStatus = new JLabel("Cảm giác như 18°.");
+			jLabelStatus.setFont(new Font("Tahoma", Font.BOLD, 12));
+			jLabelStatus.setBounds(8, 144, 168, 13);
+			panelMainRight.add(jLabelStatus);
 			
 			JPanel panel = new JPanel();
 			panel.setBounds(8, 167, 194, 21);
-			panel_main_right.add(panel);
+			panelMainRight.add(panel);
 			panel.setLayout(null);
 			
-			JLabel lbl_TempMinMax = new JLabel("Thấp/Cao");
-			lbl_TempMinMax.setHorizontalAlignment(SwingConstants.LEFT);
-			lbl_TempMinMax.setFont(new Font("Tahoma", Font.BOLD, 12));
-			lbl_TempMinMax.setBounds(8, 5, 87, 13);
-			panel.add(lbl_TempMinMax);
+			JLabel jLabelMinMaxRight = new JLabel("Thấp/Cao");
+			jLabelMinMaxRight.setHorizontalAlignment(SwingConstants.LEFT);
+			jLabelMinMaxRight.setFont(new Font("Tahoma", Font.BOLD, 12));
+			jLabelMinMaxRight.setBounds(8, 5, 87, 13);
+			panel.add(jLabelMinMaxRight);
 			
-			lblTempMinmax = new JLabel("17°/31°");
-			lblTempMinmax.setHorizontalAlignment(SwingConstants.RIGHT);
-			lblTempMinmax.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lblTempMinmax.setBounds(128, 5, 58, 13);
-			panel.add(lblTempMinmax);
+			jLabelTempMinmax = new JLabel("17°/31°");
+			jLabelTempMinmax.setHorizontalAlignment(SwingConstants.RIGHT);
+			jLabelTempMinmax.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			jLabelTempMinmax.setBounds(128, 5, 58, 13);
+			panel.add(jLabelTempMinmax);
 			
 			JPanel panel_1 = new JPanel();
 			panel_1.setLayout(null);
 			panel_1.setBounds(8, 198, 194, 21);
-			panel_main_right.add(panel_1);
+			panelMainRight.add(panel_1);
 			
-			JLabel lblNewLabel_12_1 = new JLabel("Độ ẩm");
-			lblNewLabel_12_1.setHorizontalAlignment(SwingConstants.LEFT);
-			lblNewLabel_12_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-			lblNewLabel_12_1.setBounds(8, 5, 87, 13);
-			panel_1.add(lblNewLabel_12_1);
+			JLabel jLabelHumiRight = new JLabel("Độ ẩm");
+			jLabelHumiRight.setHorizontalAlignment(SwingConstants.LEFT);
+			jLabelHumiRight.setFont(new Font("Tahoma", Font.BOLD, 12));
+			jLabelHumiRight.setBounds(8, 5, 87, 13);
+			panel_1.add(jLabelHumiRight);
 			
-			lbl_humidity = new JLabel("88%");
-			lbl_humidity.setHorizontalAlignment(SwingConstants.RIGHT);
-			lbl_humidity.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lbl_humidity.setBounds(140, 5, 46, 13);
-			panel_1.add(lbl_humidity);
+			jLabelHumiNumber = new JLabel("88%");
+			jLabelHumiNumber.setHorizontalAlignment(SwingConstants.RIGHT);
+			jLabelHumiNumber.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			jLabelHumiNumber.setBounds(140, 5, 46, 13);
+			panel_1.add(jLabelHumiNumber);
 			
 			JPanel panel_2 = new JPanel();
 			panel_2.setLayout(null);
 			panel_2.setBounds(8, 230, 194, 21);
-			panel_main_right.add(panel_2);
+			panelMainRight.add(panel_2);
 			
-			JLabel lblNewLabel_12_2 = new JLabel("Tầm nhìn");
-			lblNewLabel_12_2.setHorizontalAlignment(SwingConstants.LEFT);
-			lblNewLabel_12_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-			lblNewLabel_12_2.setBounds(8, 5, 87, 13);
-			panel_2.add(lblNewLabel_12_2);
+			JLabel jLabelVisionRight = new JLabel("Tầm nhìn");
+			jLabelVisionRight.setHorizontalAlignment(SwingConstants.LEFT);
+			jLabelVisionRight.setFont(new Font("Tahoma", Font.BOLD, 12));
+			jLabelVisionRight.setBounds(8, 5, 87, 13);
+			panel_2.add(jLabelVisionRight);
 			
-			lblVision = new JLabel("10 km");
-			lblVision.setHorizontalAlignment(SwingConstants.RIGHT);
-			lblVision.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lblVision.setBounds(133, 5, 53, 13);
-			panel_2.add(lblVision);
+			jLabelVision = new JLabel("10 km");
+			jLabelVision.setHorizontalAlignment(SwingConstants.RIGHT);
+			jLabelVision.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			jLabelVision.setBounds(133, 5, 53, 13);
+			panel_2.add(jLabelVision);
 			
 			JPanel panel_3 = new JPanel();
 			panel_3.setLayout(null);
 			panel_3.setBounds(8, 262, 194, 21);
-			panel_main_right.add(panel_3);
+			panelMainRight.add(panel_3);
 			
-			JLabel lblNewLabel_12_3 = new JLabel("Gió");
-			lblNewLabel_12_3.setHorizontalAlignment(SwingConstants.LEFT);
-			lblNewLabel_12_3.setFont(new Font("Tahoma", Font.BOLD, 12));
-			lblNewLabel_12_3.setBounds(8, 5, 87, 13);
-			panel_3.add(lblNewLabel_12_3);
+			JLabel jLabelWindRight = new JLabel("Gió");
+			jLabelWindRight.setHorizontalAlignment(SwingConstants.LEFT);
+			jLabelWindRight.setFont(new Font("Tahoma", Font.BOLD, 12));
+			jLabelWindRight.setBounds(8, 5, 87, 13);
+			panel_3.add(jLabelWindRight);
 			
-			lblWind = new JLabel("1.03 km/giờ");
-			lblWind.setHorizontalAlignment(SwingConstants.RIGHT);
-			lblWind.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lblWind.setBounds(113, 5, 73, 13);
-			panel_3.add(lblWind);
+			jLabelWind = new JLabel("1.03 km/giờ");
+			jLabelWind.setHorizontalAlignment(SwingConstants.RIGHT);
+			jLabelWind.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			jLabelWind.setBounds(113, 5, 73, 13);
+			panel_3.add(jLabelWind);
 			
 			JPanel panel_5 = new JPanel();
 			panel_5.setLayout(null);
 			panel_5.setBounds(8, 293, 194, 21);
-			panel_main_right.add(panel_5);
+			panelMainRight.add(panel_5);
 			
-			JLabel lblNewLabel_12_5 = new JLabel("Chỉ số UV");
-			lblNewLabel_12_5.setHorizontalAlignment(SwingConstants.LEFT);
-			lblNewLabel_12_5.setFont(new Font("Tahoma", Font.BOLD, 12));
-			lblNewLabel_12_5.setBounds(8, 5, 87, 13);
-			panel_5.add(lblNewLabel_12_5);
+			JLabel jLabelUVRight = new JLabel("Chỉ số UV");
+			jLabelUVRight.setHorizontalAlignment(SwingConstants.LEFT);
+			jLabelUVRight.setFont(new Font("Tahoma", Font.BOLD, 12));
+			jLabelUVRight.setBounds(8, 5, 87, 13);
+			panel_5.add(jLabelUVRight);
 			
-			lblUv = new JLabel("0");
-			lblUv.setHorizontalAlignment(SwingConstants.RIGHT);
-			lblUv.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lblUv.setBounds(156, 5, 30, 13);
-			panel_5.add(lblUv);
+			jLabelUV = new JLabel("0");
+			jLabelUV.setHorizontalAlignment(SwingConstants.RIGHT);
+			jLabelUV.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			jLabelUV.setBounds(156, 5, 30, 13);
+			panel_5.add(jLabelUV);
 			
-			JLabel lblNewLabel = new JLabel("Dự báo thời tiết các tỉnh / thành phố");
-			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lblNewLabel.setBounds(18, 63, 239, 22);
-			getContentPane().add(lblNewLabel);
+			JLabel jLabelTitleMain = new JLabel("Dự báo thời tiết các tỉnh / thành phố");
+			jLabelTitleMain.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			jLabelTitleMain.setBounds(18, 63, 239, 22);
+			getContentPane().add(jLabelTitleMain);
 		
 			} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+		
+		try {
+			BufferedImage bufferImage_hidden = ImageIO.read(new File("image\\muavua.png"));
+			ImageIcon imageIcon_hidden = new ImageIcon(bufferImage_hidden.getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+			jLabelIconRight.setIcon(imageIcon_hidden);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setMainRight();
+
 	}
 	
 
-	
 	public void setThoiTiet(String nhietdo) {
 		jLabel_TemperatureRight.setText(nhietdo);
 	}
@@ -245,25 +257,49 @@ public class ThoiTietView extends JFrame implements ActionListener {
 		try {
 			output.writeUTF("setMainRight");
 			output.flush();
-
 			City setDaNang = (City) input.readObject();
 			
-			lbl_humidity.setText(setDaNang.getHumidity());
-			jLabel_NameCityRight.setText(setDaNang.getNameCity());
+			jLabelHumiNumber.setText(setDaNang.getHumidity());
+			jLabelNameCityRight.setText(setDaNang.getNameCity());
 			jLabel_TemperatureRight.setText(setDaNang.getTemperature());
-			lbl_Status.setText(setDaNang.getStatus());
-			lblVision.setText(setDaNang.getVision());
-			lblUv.setText(setDaNang.getUv());
-			lblWind.setText(setDaNang.getWind());
+			jLabelStatus.setText(setDaNang.getStatus());
+			jLabelVision.setText(setDaNang.getVision());
+			jLabelUV.setText(setDaNang.getUv());
+			jLabelWind.setText(setDaNang.getWind());
+			
+			if(setDaNang.getStatus().equalsIgnoreCase("Mây cụm")) {
+				jLabelIconRight.setIcon(setIconMain("image\\maycum.png"));
+			} else if (setDaNang.getStatus() == "Mây rải rác") {
+				jLabelIconRight.setIcon(setIconMain("image\\mayrairac.png"));
+			} else if (setDaNang.getStatus() == "Mưa vừa") {
+				jLabelIconRight.setIcon(setIconMain("image\\muavua.png"));
+			} else if (setDaNang.getStatus() == "Mưa cường độ nặng") {
+				jLabelIconRight.setIcon(setIconMain("image\\muacuongdonang.png"));
+			} else if (setDaNang.getStatus() == "Nhiều mây") {
+				jLabelIconRight.setIcon(setIconMain("image\\nhieumay.png"));
+			} else if (setDaNang.getStatus().equalsIgnoreCase("Sương mờ")) {
+				jLabelIconRight.setIcon(setIconMain("image\\suongmo.png"));
+			}
 			
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 	}
+	
+	public ImageIcon setIconMain(String url) {
+		try {
+			BufferedImage bufferedImage = ImageIO.read(new File(url));
+			ImageIcon imageIcon = new ImageIcon(bufferedImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH));
+			return imageIcon;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null ; 
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String txt_search = textField_Search.getText();
+		String txt_search = textFieldSearch.getText();
 		try {
 			output.writeUTF(txt_search);
 			output.flush();

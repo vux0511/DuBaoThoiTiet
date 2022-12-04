@@ -10,8 +10,10 @@ public class City implements Serializable {
 	private String wind;
 	private String uv;
 	private String air;
+	private String urlIcon;
 	
-	
+
+
 	public City(String nameCity, String temperature, String status, String humidity) {
 		this.nameCity = nameCity;
 		this.temperature = temperature;
@@ -89,6 +91,14 @@ public class City implements Serializable {
 
 	public void setAir(String air) {
 		this.air = air;
+	}
+	
+	public String getUrlIcon() {
+		return urlIcon;
+	}
+
+	public void setUrlIcon(String urlIcon) {
+		this.urlIcon = urlIcon;
 	}
 
 	public City(String nameCity, String temperature, String status, String humidity, String temp_minmax, String vision,
