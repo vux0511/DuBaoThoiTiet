@@ -1,13 +1,17 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,18 +22,20 @@ public class View extends JPanel {
 
 	ImageIcon iconSun = new ImageIcon("C:\\Users\\vu_20\\Desktop\\02n@2x.png", "Lock");
 	ImageIcon icon1 = new ImageIcon("C:\\Users\\vu_20\\Desktop\\04n@2x.png", "Lock");
-	JLabel nameCity, temperature, status;
+	ImageIcon iCon;
+	JLabel jLabelNameCity, jLabelTemp, jLabelStatus;
+	JLabel jLabelIcon;
 	
 	public View() {
 
 		setLayout(new BorderLayout(0, 0));
-		JPanel panel_0 = new JPanel();
+		JPanel panelMain = new JPanel();
 		
-		// sự kiện click vào JPanel
-		panel_0.addMouseListener(new MouseListener() {
+		// Sự kiện click vào JPanel
+		panelMain.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				City city = new Handle().Search(convert_Url(nameCity.getText()));
+				City city = new Handle().Search(convert_Url(jLabelNameCity.getText()));
 				new Detail0().setDataSearch(city);
 			}
 
@@ -50,35 +56,47 @@ public class View extends JPanel {
 			}
 		});
 		
-		panel_0.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		panel_0.setLayout(new BorderLayout(0, 0));
+		panelMain.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panelMain.setLayout(new BorderLayout(0, 0));
 		
-		nameCity = new JLabel("Đà Nẵng");
-		nameCity.setHorizontalAlignment(SwingConstants.CENTER);
-		nameCity.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panel_0.add(nameCity, BorderLayout.NORTH);
+		jLabelNameCity = new JLabel("Đà Nẵng");
+		jLabelNameCity.setHorizontalAlignment(SwingConstants.CENTER);
+		jLabelNameCity.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panelMain.add(jLabelNameCity, BorderLayout.NORTH);
 		
-		temperature = new JLabel("17° / 17°");
-		temperature.setHorizontalAlignment(SwingConstants.CENTER);
-		temperature.setFont(new Font("Tahoma", Font.BOLD, 17));
-		panel_0.add(temperature, BorderLayout.SOUTH);
+		jLabelTemp = new JLabel("17° / 17°");
+		jLabelTemp.setHorizontalAlignment(SwingConstants.CENTER);
+		jLabelTemp.setFont(new Font("Tahoma", Font.BOLD, 17));
+		panelMain.add(jLabelTemp, BorderLayout.SOUTH);
 		
-		JPanel panel_6 = new JPanel();
-		panel_0.add(panel_6, BorderLayout.CENTER);
-		panel_6.setLayout(new BorderLayout(0, 0));
+		JPanel panelIcon = new JPanel();
+		panelMain.add(panelIcon, BorderLayout.CENTER);
+		panelIcon.setLayout(new BorderLayout(0, 0));
 		
-		status = new JLabel("Nhiều mây");
-		status.setVerticalAlignment(SwingConstants.TOP);
-		status.setHorizontalAlignment(SwingConstants.CENTER);
-		status.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_6.add(status, BorderLayout.SOUTH);
+		jLabelStatus = new JLabel("Nhiều mây");
+		jLabelStatus.setVerticalAlignment(SwingConstants.TOP);
+		jLabelStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		jLabelStatus.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panelIcon.add(jLabelStatus, BorderLayout.SOUTH);
 		
-		JLabel lbl_Icon = new JLabel((new ImageIcon("C:\\Users\\vu_20\\Desktop\\02n@2x.png")));
-		lbl_Icon.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_6.add(lbl_Icon, BorderLayout.CENTER);
+		System.out.println("hrllo");
 		
-		this.add(panel_0);
+		jLabelIcon = new JLabel("");
+		jLabelIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		
+		try {
+			BufferedImage bufferImage_hidden = ImageIO.read(new File("image\\muavua.png"));
+			ImageIcon imageIcon_hidden = new ImageIcon(bufferImage_hidden.getScaledInstance(100, 100, Image.SCALE_SMOOTH));
+			jLabelIcon.setIcon(imageIcon_hidden);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		panelIcon.add(jLabelIcon, BorderLayout.CENTER);
+		
+		this.add(panelMain);
+		jLabelIcon.setIcon(setIconMain("image\\maycum.png"));
 	}
 	
 	public static String convert_Url(String city) { 
@@ -91,12 +109,34 @@ public class View extends JPanel {
 	      }
 		return city;
 	}
+	
+	public ImageIcon setIconMain(String url) {
+		try {
+			BufferedImage bufferedImage = ImageIO.read(new File(url));
+			ImageIcon imageIcon = new ImageIcon(bufferedImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH));
+			return imageIcon;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null ; 
+		}
+	}
+	
+	public void setData(String namecity,String temp, String infor, String iCon) {
+		jLabelNameCity.setText(namecity);
+		jLabelTemp.setText(temp);
+		jLabelStatus.setText(infor);
 
-	public void setData(String namecity,String temp, String infor) {
-		nameCity.setText(namecity);
-		ImageIcon icon3 = new ImageIcon("C:\\Users\\vu_20\\Desktop\\02n@2x.png", "Lock");
-		temperature.setText(temp);
-		status.setText(infor);
+		if(infor.equalsIgnoreCase("Mây cụm")) {
+			jLabelIcon.setIcon(setIconMain("image\\maycum.png"));
+		} else if (infor == "Mây rải rác") {
+			jLabelIcon.setIcon(setIconMain("image\\mayrairac.png"));
+		} else if (infor == "Mưa vừa") {
+			jLabelIcon.setIcon(setIconMain("image\\muavua.png"));
+		} else if (infor == "Mưa cường độ nặng") {
+			jLabelIcon.setIcon(setIconMain("image\\muacuongdonang.png"));
+		} else if (infor.equalsIgnoreCase("Nhiều mây")) {
+			jLabelIcon.setIcon(setIconMain("image\\nhieumay.png"));
+		}
 	}
 
 }

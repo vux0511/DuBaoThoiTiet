@@ -59,6 +59,7 @@ public class Handle {
 		try {	
 			String city = convert_Url(txt); 
 			String url = "https://thoitiet.vn/"+city;
+
 			Document doc = Jsoup.connect(url).timeout(5000).get();
 			
 			Element nameCity = doc.select("a[href=/"+city+"]").first();
