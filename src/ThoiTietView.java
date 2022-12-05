@@ -42,7 +42,7 @@ public class ThoiTietView extends JFrame implements ActionListener {
 	ImageIcon icon1 = new ImageIcon("C:\\Users\\vu_20\\Desktop\\04n@2x.png", "Lock");
 	ImageIcon icon_do_am = new ImageIcon("C:\\Users\\vu_20\\Desktop\\giotnuoc2.png", "Lock");
 	ImageIcon icon_location = new ImageIcon("C:\\Users\\vu_20\\Desktop\\location.png", "Lock");
- 
+	JComboBox comboBox;
 
 	private JTextField textFieldSearch;
 	JLabel jLabelNameCityRight, jLabelHumiNumber, jLabelTempMinmax, lblNewLabel_12, jLabelStatus ,jLabelIconRight,
@@ -77,6 +77,32 @@ public class ThoiTietView extends JFrame implements ActionListener {
 		jLabelLogo.setBounds(0, 0, 72, 46);
 		panelTop.add(jLabelLogo);
 		
+		comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"An Giang", "Bà Rịa Vũng Tàu", "Bắc Giang", "Bắc Kạn", "Bạc Liêu", "Bắc Ninh", "Bến Tre", "Bình Định", "Bình Dương", "Bình Phước", "Bình Thuận", "Cà Mau", "Cần Thơ", "Cao Bằng", "Đà Nẵng", "Đắk Lắk", "Đắk Nông", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Gia Lai", "Hà Giang", "Hà Nam", "Hà Nội", "Hà Tĩnh", "Hải Dương", "Hải Phòng", "Hậu Giang", "Hòa Bình", "Hưng Yên", "Khánh Hòa", "Kiên Giang", "Kon Tum", "Lai Châu", "Lâm Đồng", "Lạng Sơn", "Lào Cai", "Long An", "Nam Định", "Nghệ An", "Ninh Bình", "Ninh Thuận", "Phú Thọ", "Phú Yên", "Quảng Bình", "Quảng Nam", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sóc Trăng", "Sơn La", "Tây Ninh", "Thái Bình", "Thái Nguyên", "Thanh Hóa", "Thừa Thiên Huế", "Tiền Giang", "Hồ Chí Minh", "Trà Vinh", "Tuyên Quang", "Vĩnh Long", "Vĩnh Phúc", "Yên Bái"}));
+		comboBox.setBounds(597, 12, 125, 26);
+		panelTop.add(comboBox);
+		
+		comboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {	
+				
+				String txtSearchComboBox = (String) comboBox.getSelectedItem();
+				try {
+					output.writeUTF(txtSearchComboBox);
+					output.flush();
+					
+					City city = (City) input.readObject();
+					if (city == null) {
+			            JOptionPane.showMessageDialog(null, "Không tìm thấy thành phố này!",
+			                    "ERROR", JOptionPane.ERROR_MESSAGE);
+			         } else {
+						new Detail0().setDataSearch(city);
+			         }
+				} catch (Exception e2) {	
+				}
+			}
+		});
+		
 		JPanel panelMain = new JPanel();
 		panelMain.setBounds(8, 95, 523, 371);
 		getContentPane().add(panelMain);
@@ -96,7 +122,6 @@ public class ThoiTietView extends JFrame implements ActionListener {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
 		try {
 			output.writeUTF("setMain");
 			output.flush();
@@ -121,11 +146,6 @@ public class ThoiTietView extends JFrame implements ActionListener {
 			jLabelNameCityRight.setFont(new Font("Tahoma", Font.BOLD, 14));
 			jLabelNameCityRight.setBounds(8, 10, 182, 27);
 			panelMainRight.add(jLabelNameCityRight);
-			
-			JLabel jLabelTimeRight = new JLabel("Đã cập nhật 27 phút trước");
-			jLabelTimeRight.setFont(new Font("Tahoma", Font.PLAIN, 11));
-			jLabelTimeRight.setBounds(8, 36, 182, 13);
-			panelMainRight.add(jLabelTimeRight);
 			
 			jLabelIconRight = new JLabel("");
 			jLabelIconRight.setBounds(8, 59, 72, 75);
@@ -245,7 +265,7 @@ public class ThoiTietView extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 		setMainRight();
-
+		comboOptionActionPerformed();
 	}
 	
 
@@ -312,6 +332,22 @@ public class ThoiTietView extends JFrame implements ActionListener {
 				new Detail0().setDataSearch(city);
 	         }
 		} catch (Exception e2) {	
+		}
+	}
+	
+	public void comboOptionActionPerformed() {
+		comboBox.addActionListener(comboBox);
+		String selected = comboBox.getSelectedItem().toString();
+		System.out.println("Selected Item  = " + selected);
+		
+		try {
+			if ("An Giang".equals(selected)) {
+				System.out.println(selected);
+			} else {
+				System.out.println("Sai rùi");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 	}
 }
