@@ -79,7 +79,7 @@ public class View extends JPanel {
 		jLabelStatus.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panelIcon.add(jLabelStatus, BorderLayout.SOUTH);
 		
-		
+		System.out.println("hrllo");
 		
 		jLabelIcon = new JLabel("");
 		jLabelIcon.setHorizontalAlignment(SwingConstants.CENTER);
