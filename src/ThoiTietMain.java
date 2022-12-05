@@ -23,6 +23,8 @@ import javax.swing.JSeparator;
 
 
 public class ThoiTietMain extends JFrame implements ActionListener {
+	public ThoiTietMain() {
+	}
 
 	public void init() {		
 		try {	
@@ -38,6 +40,7 @@ public class ThoiTietMain extends JFrame implements ActionListener {
 
 
 	public static void main(String[] args) {
+		
 		ThoiTietMain ttm = new ThoiTietMain();
 		ttm.init();
 		ttm.setTitle("Dự Báo Thời Tiết");
