@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 
 public class Server {
+	
 	public static void main(String[] args) {
 			Handle hd = new Handle();
 			byte[] byte_read = new byte[9999];
@@ -24,6 +25,7 @@ public class Server {
 				Handle setDaNang = new Handle(); 
 				
 				do {
+					
 					String inputThoiTietView = input.readUTF();
 					
 					//Set Main
