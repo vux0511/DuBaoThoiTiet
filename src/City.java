@@ -11,6 +11,7 @@ public class City implements Serializable {
 	private String uv;
 	private String air;
 	private String urlIcon;
+	private String test;
 	
 
 
@@ -113,5 +114,6 @@ public class City implements Serializable {
 		this.uv = uv;
 		this.air = air;
 	}
+	
 	
 }
