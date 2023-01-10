@@ -78,15 +78,26 @@ public class ThoiTietView extends JFrame implements ActionListener {
 		panelTop.add(jLabelLogo);
 		
 		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"An Giang", "Bà Rịa Vũng Tàu", "Bắc Giang", "Bắc Kạn", "Bạc Liêu", "Bắc Ninh", "Bến Tre", "Bình Định", "Bình Dương", "Bình Phước", "Bình Thuận", "Cà Mau", "Cần Thơ", "Cao Bằng", "Đà Nẵng", "Đắk Lắk", "Đắk Nông", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Gia Lai", "Hà Giang", "Hà Nam", "Hà Nội", "Hà Tĩnh", "Hải Dương", "Hải Phòng", "Hậu Giang", "Hòa Bình", "Hưng Yên", "Khánh Hòa", "Kiên Giang", "Kon Tum", "Lai Châu", "Lâm Đồng", "Lạng Sơn", "Lào Cai", "Long An", "Nam Định", "Nghệ An", "Ninh Bình", "Ninh Thuận", "Phú Thọ", "Phú Yên", "Quảng Bình", "Quảng Nam", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sóc Trăng", "Sơn La", "Tây Ninh", "Thái Bình", "Thái Nguyên", "Thanh Hóa", "Thừa Thiên Huế", "Tiền Giang", "Hồ Chí Minh", "Trà Vinh", "Tuyên Quang", "Vĩnh Long", "Vĩnh Phúc", "Yên Bái"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"An Giang", "Bà Rịa Vũng Tàu",
+				"Bắc Giang", "Bắc Kạn", "Bạc Liêu", "Bắc Ninh", "Bến Tre", "Bình Định",
+				"Bình Dương", "Bình Phước", "Bình Thuận", "Cà Mau", "Cần Thơ", "Cao Bằng", 
+				"Đà Nẵng", "Đắk Lắk", "Đắk Nông", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Gia Lai",
+				"Hà Giang", "Hà Nam", "Hà Nội", "Hà Tĩnh", "Hải Dương", "Hải Phòng", "Hậu Giang", "Hòa Bình", 
+				"Hưng Yên", "Khánh Hòa", "Kiên Giang", "Kon Tum", "Lai Châu", "Lâm Đồng", "Lạng Sơn", "Lào Cai", 
+				"Long An", "Nam Định", "Nghệ An", "Ninh Bình", "Ninh Thuận", "Phú Thọ", "Phú Yên", "Quảng Bình",
+				"Quảng Nam", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sóc Trăng", "Sơn La", "Tây Ninh", 
+				"Thái Bình", "Thái Nguyên", "Thanh Hóa", "Thừa Thiên Huế", "Tiền Giang", "Hồ Chí Minh",
+				"Trà Vinh", "Tuyên Quang", "Vĩnh Long", "Vĩnh Phúc", "Yên Bái"}));
 		comboBox.setBounds(597, 12, 125, 26);
 		panelTop.add(comboBox);
 		
+		// Set AcctionListener cho comboBox
 		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
 				
 				String txtSearchComboBox = (String) comboBox.getSelectedItem();
+				
 				try {
 					output.writeUTF(txtSearchComboBox);
 					output.flush();
@@ -96,7 +107,7 @@ public class ThoiTietView extends JFrame implements ActionListener {
 			            JOptionPane.showMessageDialog(null, "Không tìm thấy thành phố này!",
 			                    "ERROR", JOptionPane.ERROR_MESSAGE);
 			         } else {
-						new Detail0().setDataSearch(city);
+						new Detail().setDataSearch(city);
 			         }
 				} catch (Exception e2) {	
 				}
@@ -122,6 +133,7 @@ public class ThoiTietView extends JFrame implements ActionListener {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		
 		try {
 			output.writeUTF("setMain");
 			output.flush();
@@ -235,7 +247,7 @@ public class ThoiTietView extends JFrame implements ActionListener {
 			panel_5.setBounds(8, 293, 194, 21);
 			panelMainRight.add(panel_5);
 			
-			JLabel jLabelUVRight = new JLabel("Chỉ số UV");
+			JLabel jLabelUVRight = new JLabel("Chỉ số UV");
 			jLabelUVRight.setHorizontalAlignment(SwingConstants.LEFT);
 			jLabelUVRight.setFont(new Font("Tahoma", Font.BOLD, 12));
 			jLabelUVRight.setBounds(8, 5, 87, 13);
@@ -257,7 +269,7 @@ public class ThoiTietView extends JFrame implements ActionListener {
 		}
 		
 		try {
-			BufferedImage bufferImage_hidden = ImageIO.read(new File("image\\muavua.png"));
+			BufferedImage bufferImage_hidden = ImageIO.read(new File("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/muavua.png"));
 			ImageIcon imageIcon_hidden = new ImageIcon(bufferImage_hidden.getScaledInstance(80, 80, Image.SCALE_SMOOTH));
 			jLabelIconRight.setIcon(imageIcon_hidden);
 		} catch (Exception e) {
@@ -287,18 +299,22 @@ public class ThoiTietView extends JFrame implements ActionListener {
 			jLabelUV.setText(setDaNang.getUv());
 			jLabelWind.setText(setDaNang.getWind());
 			
-			if(setDaNang.getStatus().equalsIgnoreCase("Mây cụm")) {
-				jLabelIconRight.setIcon(setIconMain("image\\maycum.png"));
-			} else if (setDaNang.getStatus() == "Mây rải rác") {
-				jLabelIconRight.setIcon(setIconMain("image\\mayrairac.png"));
+			if (setDaNang.getStatus() == "Mây rải rác") {
+				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/mayrairac.png"));
 			} else if (setDaNang.getStatus() == "Mưa vừa") {
-				jLabelIconRight.setIcon(setIconMain("image\\muavua.png"));
+				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/muavua.png"));
 			} else if (setDaNang.getStatus() == "Mưa cường độ nặng") {
-				jLabelIconRight.setIcon(setIconMain("image\\muacuongdonang.png"));
+				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/muacuongdonang.png"));
 			} else if (setDaNang.getStatus() == "Nhiều mây") {
-				jLabelIconRight.setIcon(setIconMain("image\\nhieumay.png"));
+				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/nhieumay.png"));
 			} else if (setDaNang.getStatus().equalsIgnoreCase("Sương mờ")) {
-				jLabelIconRight.setIcon(setIconMain("image\\suongmo.png"));
+				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/suongmo.png"));
+			} else if (setDaNang.getStatus().equalsIgnoreCase("Trời quang mây đãng")) {
+				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/troiquangmaydang.png"));
+			} else if(setDaNang.getStatus().equalsIgnoreCase("Mây cụm")) {
+				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/maycum.png"));
+			} else if(setDaNang.getStatus().equalsIgnoreCase("Mây thua")) {
+				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/maythua.png"));
 			}
 			
 		} catch (Exception e) {
@@ -317,6 +333,7 @@ public class ThoiTietView extends JFrame implements ActionListener {
 		}
 	}
 
+	//Set Search
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String txt_search = textFieldSearch.getText();
@@ -329,7 +346,7 @@ public class ThoiTietView extends JFrame implements ActionListener {
 	            JOptionPane.showMessageDialog(this, "Không tìm thấy thành phố này!",
 	                    "ERROR", JOptionPane.ERROR_MESSAGE);		
 	         } else {
-				new Detail0().setDataSearch(city);
+				new Detail().setDataSearch(city);
 	         }
 		} catch (Exception e2) {	
 		}
