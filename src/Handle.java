@@ -50,7 +50,7 @@ public class Handle {
 					temp_minmax.ownText(), vision.ownText(), wind.ownText(), uv.ownText(), air.ownText());
 			
 			}catch(Exception e1) {
-			System.out.println("Không tìm thấy thành phố này");
+			System.out.println("Sai!");
 			return null;
 		}
 	}
@@ -75,7 +75,7 @@ public class Handle {
 			return new City(nameCity.ownText(),temperature.ownText(), status.ownText(), humidity.ownText(),
 					temp_minmax.ownText(), vision.ownText(), wind.ownText(), uv.ownText(), air.ownText());
 			}catch(Exception e1) {
-			System.out.println("Không tìm thấy thành phố này");
+			System.err.println("Không tìm thấy thành phố này");
 			return null;
 		}
 	}
