@@ -20,9 +20,6 @@ import javax.swing.border.MatteBorder;
 
 public class View extends JPanel {
 
-	ImageIcon iconSun = new ImageIcon("C:\\Users\\vu_20\\Desktop\\02n@2x.png", "Lock");
-	ImageIcon icon1 = new ImageIcon("C:\\Users\\vu_20\\Desktop\\04n@2x.png", "Lock");
-	ImageIcon iCon;
 	JLabel jLabelNameCity, jLabelTemp, jLabelStatus;
 	JLabel jLabelIcon;
 	
@@ -36,7 +33,7 @@ public class View extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				City city = new Handle().Search(convert_Url(jLabelNameCity.getText()));
-				new Detail0().setDataSearch(city);
+				new Detail().setDataSearch(city);
 			}
 
 			@Override
@@ -79,13 +76,11 @@ public class View extends JPanel {
 		jLabelStatus.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panelIcon.add(jLabelStatus, BorderLayout.SOUTH);
 		
-		System.out.println("hrllo");
-		
 		jLabelIcon = new JLabel("");
 		jLabelIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		try {
-			BufferedImage bufferImage_hidden = ImageIO.read(new File("image\\muavua.png"));
+			BufferedImage bufferImage_hidden = ImageIO.read(new File("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/muavua.png"));
 			ImageIcon imageIcon_hidden = new ImageIcon(bufferImage_hidden.getScaledInstance(100, 100, Image.SCALE_SMOOTH));
 			jLabelIcon.setIcon(imageIcon_hidden);
 		} catch (Exception e) {
@@ -96,7 +91,7 @@ public class View extends JPanel {
 		panelIcon.add(jLabelIcon, BorderLayout.CENTER);
 		
 		this.add(panelMain);
-		jLabelIcon.setIcon(setIconMain("image\\maycum.png"));
+		jLabelIcon.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/maycum.png"));
 	}
 	
 	public static String convert_Url(String city) { 
@@ -126,16 +121,22 @@ public class View extends JPanel {
 		jLabelTemp.setText(temp);
 		jLabelStatus.setText(infor);
 
-		if(infor.equalsIgnoreCase("Mây cụm")) {
-			jLabelIcon.setIcon(setIconMain("image\\maycum.png"));
-		} else if (infor == "Mây rải rác") {
-			jLabelIcon.setIcon(setIconMain("image\\mayrairac.png"));
-		} else if (infor == "Mưa vừa") {
-			jLabelIcon.setIcon(setIconMain("image\\muavua.png"));
+		if (infor == "Mưa vừa") {
+			jLabelIcon.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/muavua.png"));
 		} else if (infor == "Mưa cường độ nặng") {
-			jLabelIcon.setIcon(setIconMain("image\\muacuongdonang.png"));
+			jLabelIcon.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/muacuongdonang.png"));
 		} else if (infor.equalsIgnoreCase("Nhiều mây")) {
-			jLabelIcon.setIcon(setIconMain("image\\nhieumay.png"));
+			jLabelIcon.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/nhieumay.png"));
+		} else if(infor.equalsIgnoreCase("Mây cụm")) {
+			jLabelIcon.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/maycum.png"));
+		}  else if(infor.equalsIgnoreCase("Mây thưa")) {
+			jLabelIcon.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/maythua.png"));
+		} else if(infor.equalsIgnoreCase("Sương mờ")) {
+			jLabelIcon.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/suongmo.png"));
+		} else if(infor.equalsIgnoreCase("Bầu trời quang đãng")) {
+			jLabelIcon.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/bautroiquangdang.png"));
+		} else if(infor.equalsIgnoreCase("Mây rải rác")) {
+			jLabelIcon.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/mayrairac.png"));
 		}
 	}
 
