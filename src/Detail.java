@@ -78,7 +78,7 @@ public class Detail extends JFrame {
 		jLabelWindSearch.setBounds(301, 132, 62, 13);
 		panelTop.add(jLabelWindSearch);
 		
-		JLabel jLabelUVSearch = new JLabel("Test");
+		JLabel jLabelUVSearch = new JLabel("Chỉ số UV");
 		jLabelUVSearch.setFont(new Font("Tahoma", Font.BOLD, 12));
 		jLabelUVSearch.setBounds(381, 132, 62, 13);
 		panelTop.add(jLabelUVSearch);
@@ -148,9 +148,7 @@ public class Detail extends JFrame {
 		jLabelAirSearch.setText(city.getAir());
 		jLabelStatusSearch.setText(city.getStatus());
 				
-		if (city.getStatus() == "Mây rải rác") {
-			jLabelImageSearch.setIcon(setIconSearch("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/mayrairac.png"));
-		} else if (city.getStatus() == "Mưa vừa") {
+		if (city.getStatus() == "Mưa vừa") {
 			jLabelImageSearch.setIcon(setIconSearch("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/muavua.png"));
 		} else if (city.getStatus() == "Mưa cường độ nặng") {
 			jLabelImageSearch.setIcon(setIconSearch("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/muacuongdonang.png"));
@@ -164,6 +162,8 @@ public class Detail extends JFrame {
 			jLabelImageSearch.setIcon(setIconSearch("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/bautroiquangdang.png"));
 		} else if (city.getStatus().equalsIgnoreCase("Mây cụm")) {
 			jLabelImageSearch.setIcon(setIconSearch("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/maycum.png"));
+		} else if (city.getStatus().equalsIgnoreCase("Mây rải rác")) {
+			jLabelImageSearch.setIcon(setIconSearch("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/mayrairac.png"));
 		}
 	}
 	
