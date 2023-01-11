@@ -299,9 +299,7 @@ public class ThoiTietView extends JFrame implements ActionListener {
 			jLabelUV.setText(setDaNang.getUv());
 			jLabelWind.setText(setDaNang.getWind());
 			
-			if (setDaNang.getStatus() == "Mây rải rác") {
-				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/mayrairac.png"));
-			} else if (setDaNang.getStatus() == "Mưa vừa") {
+			if (setDaNang.getStatus() == "Mưa vừa") {
 				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/muavua.png"));
 			} else if (setDaNang.getStatus() == "Mưa cường độ nặng") {
 				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/muacuongdonang.png"));
@@ -313,8 +311,10 @@ public class ThoiTietView extends JFrame implements ActionListener {
 				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/troiquangmaydang.png"));
 			} else if(setDaNang.getStatus().equalsIgnoreCase("Mây cụm")) {
 				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/maycum.png"));
-			} else if(setDaNang.getStatus().equalsIgnoreCase("Mây thua")) {
+			} else if(setDaNang.getStatus().equalsIgnoreCase("Mây thưa")) {
 				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/maythua.png"));
+			} else if(setDaNang.getStatus().equalsIgnoreCase("Mây rải rác")) {
+				jLabelIconRight.setIcon(setIconMain("/Users/vux/Documents/Java/DuBaoThoiTiet/Image/mayrairac.png"));
 			}
 			
 		} catch (Exception e) {
